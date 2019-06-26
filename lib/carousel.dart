@@ -1,51 +1,35 @@
 import 'package:flutter/material.dart';
 
 class Carousel extends StatefulWidget {
-  Carousel({Key key, @required this.child}) : super(key: key);
+  Carousel({Key key, @required this.children, @required this.currentSelected})
+      : super(key: key);
 
-  final Widget child;
-
+  final List<Widget> children;
+  final int currentSelected;
   _CarouselState createState() => _CarouselState();
 }
 
-class _CarouselState extends State<Carousel>
-    with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation<double> opacityAnimation;
-  Animation<double> translateAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-    )..addListener(() {
-        setState(() {});
-      });
-
-    opacityAnimation = Tween(begin: 0.0, end: 1.0).animate(controller);
-    translateAnimation = Tween(begin: 10.0, end: 0.0).animate(controller);
-
-    controller.forward();
-  }
-
-  @override
-  void didUpdateWidget(Carousel oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    controller.reset();
-    controller.forward();
-  }
-
+class _CarouselState extends State<Carousel> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Transform.translate(
-        offset: Offset(0, translateAnimation.value),
-        child: Opacity(
-          opacity: opacityAnimation.value,
-          child: widget.child,
-        ),
+      child: AnimatedSwitcher(
+        switchInCurve: Curves.easeIn,
+        switchOutCurve: Curves.easeOut,
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          final offsetAnimation =
+              Tween<Offset>(begin: Offset(0.0, 0.0), end: Offset(0.0, -1.0))
+                  .animate(animation);
+          return SlideTransition(
+            position: offsetAnimation,
+            child: FadeTransition(
+              opacity: animation,
+              child: child,
+            ),
+          );
+        },
+        duration: Duration(milliseconds: 300),
+        child: widget.children[widget.currentSelected],
       ),
     );
   }

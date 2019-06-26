@@ -12,22 +12,12 @@ class _MoviesState extends State<Movies> {
   int selected = 0;
 
   void changeIndex(int index) {
+    if (selected == index) {
+      return;
+    }
     setState(() {
       selected = index;
     });
-  }
-
-  Widget buildCards() {
-    if (selected == 0) {
-      return Text("Zero");
-    } else if (selected == 1) {
-      return Text("One");
-    } else if (selected == 2) {
-      return Text("Two");
-    } else if (selected == 3) {
-      return Text("Three");
-    }
-    return Text("");
   }
 
   @override
@@ -42,7 +32,25 @@ class _MoviesState extends State<Movies> {
           ),
           Container(
             child: Carousel(
-              child: buildCards(),
+              currentSelected: selected,
+              children: [
+                Text(
+                  "Zero",
+                  key: UniqueKey(),
+                ),
+                Text(
+                  "One",
+                  key: UniqueKey(),
+                ),
+                Text(
+                  "Two",
+                  key: UniqueKey(),
+                ),
+                Text(
+                  "Three",
+                  key: UniqueKey(),
+                ),
+              ],
             ),
           )
         ],
