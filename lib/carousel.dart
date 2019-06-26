@@ -17,9 +17,18 @@ class _CarouselState extends State<Carousel> {
         switchInCurve: Curves.easeIn,
         switchOutCurve: Curves.easeOut,
         transitionBuilder: (Widget child, Animation<double> animation) {
-          final offsetAnimation =
-              Tween<Offset>(begin: Offset(0.0, 0.0), end: Offset(0.0, -1.0))
-                  .animate(animation);
+          final offsetAnimation = TweenSequence([
+            TweenSequenceItem(
+                tween: Tween<Offset>(
+                    begin: Offset(0.0, 1.0), end: Offset(0.0, 0.0)),
+                weight: 1),
+            TweenSequenceItem(
+                tween: ConstantTween(Offset(0.0, 0.0)), weight: 1),
+            TweenSequenceItem(
+                tween: Tween<Offset>(
+                    begin: Offset(0.0, 0.0), end: Offset(0.0, -1.0)),
+                weight: 1)
+          ]).animate(animation);
           return SlideTransition(
             position: offsetAnimation,
             child: FadeTransition(
