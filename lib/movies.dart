@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fovies/carousel.dart';
 import 'package:fovies/tabs.dart';
 
 class Movies extends StatefulWidget {
@@ -16,6 +17,19 @@ class _MoviesState extends State<Movies> {
     });
   }
 
+  Widget buildCards() {
+    if (selected == 0) {
+      return Text("Zero");
+    } else if (selected == 1) {
+      return Text("One");
+    } else if (selected == 2) {
+      return Text("Two");
+    } else if (selected == 3) {
+      return Text("Three");
+    }
+    return Text("");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,6 +39,11 @@ class _MoviesState extends State<Movies> {
           Tabs(
             selected: selected,
             changeIndex: this.changeIndex,
+          ),
+          Container(
+            child: Carousel(
+              child: buildCards(),
+            ),
           )
         ],
       ),
