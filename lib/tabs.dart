@@ -15,6 +15,7 @@ class Tabs extends StatelessWidget {
           SizedBox(
             height: 300,
             child: ListView(
+              padding: EdgeInsets.only(left: 35),
               scrollDirection: Axis.horizontal,
               children: <Widget>[
                 MovieTab(

@@ -10,16 +10,19 @@ class Fovies extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.white,
         body: Container(
-          padding: EdgeInsets.only(left: 35, top: 125),
+          padding: EdgeInsets.only(top: 125),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                "Movies",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 28),
+              Container(
+                margin: EdgeInsets.only(left: 35),
+                child: Text(
+                  "Movies",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 32),
+                ),
               ),
               Movies()
             ],
