@@ -11,24 +11,28 @@ class Carousel extends StatefulWidget {
 class _CarouselState extends State<Carousel>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
-  Animation<double> animation;
+  Animation<double> opacityAnimation;
+  Animation<double> translateAnimation;
 
   @override
   void initState() {
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1000),
-    );
-    animation = Tween(begin: 0.0, end: 1.0).animate(controller)
-      ..addListener(() {
+      duration: const Duration(milliseconds: 500),
+    )..addListener(() {
         setState(() {});
       });
+
+    opacityAnimation = Tween(begin: 0.0, end: 1.0).animate(controller);
+    translateAnimation = Tween(begin: 10.0, end: 0.0).animate(controller);
+
     controller.forward();
   }
 
   @override
   void didUpdateWidget(Carousel oldWidget) {
+    super.didUpdateWidget(oldWidget);
     controller.reset();
     controller.forward();
   }
@@ -36,9 +40,12 @@ class _CarouselState extends State<Carousel>
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Opacity(
-        opacity: animation.value,
-        child: widget.child,
+      child: Transform.translate(
+        offset: Offset(0, translateAnimation.value),
+        child: Opacity(
+          opacity: opacityAnimation.value,
+          child: widget.child,
+        ),
       ),
     );
   }
