@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fovies/movies.dart';
+import 'package:fovies/data.dart';
 
 void main() => runApp(Fovies());
 
 class Fovies extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    getMovies();
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.white,

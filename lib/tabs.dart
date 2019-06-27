@@ -24,7 +24,7 @@ class Tabs extends StatelessWidget {
                     changeIndex(0);
                   },
                   isSelected: selected == 0,
-                  label: "New Releases",
+                  label: "Now Playing",
                 ),
                 MovieTab(
                   onTap: () {
