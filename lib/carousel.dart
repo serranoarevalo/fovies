@@ -12,9 +12,11 @@ class Carousel extends StatefulWidget {
   _CarouselState createState() => _CarouselState();
 }
 
+final double fraction = 0.85;
+
 class _CarouselState extends State<Carousel> {
   PageController controller =
-      PageController(initialPage: 0, viewportFraction: 0.9);
+      PageController(initialPage: 0, viewportFraction: fraction);
   dynamic page = 0.0;
 
   @override
@@ -32,23 +34,25 @@ class _CarouselState extends State<Carousel> {
     return Container(
       height: MediaQuery.of(context).size.height / 1.7,
       child: !widget.loading
-          ? PageView.builder(
+          ? PageView(
               scrollDirection: Axis.horizontal,
-              itemCount: widget.data.length,
               controller: controller,
-              itemBuilder: (BuildContext context, int index) {
-                return Transform.scale(
-                  scale: max(0.9, 1.0 - (index - page).abs()),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                            image: NetworkImage(widget.data[index].poster))),
-                  ),
-                );
-              },
-            )
+              children: widget.data
+                  .asMap()
+                  .map((index, movie) => MapEntry(
+                      index,
+                      Transform.scale(
+                          scale: (1 -
+                              (((page - index).abs() * 0.1).clamp(0.0, 1.0))),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                    image: NetworkImage(movie.poster))),
+                          ))))
+                  .values
+                  .toList())
           : Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
