@@ -34,11 +34,15 @@ class _MoviesState extends State<Movies> {
             changeIndex: this.changeIndex,
           ),
           Container(
-            child: Carousel(
-              currentSelected: selected,
-              futures: [widget.nowPlaying],
-            ),
-          )
+              height: MediaQuery.of(context).size.height / 1.7,
+              child: FutureBuilder(
+                  key: UniqueKey(),
+                  future: widget.nowPlaying,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<Movie>> snapshot) {
+                    return Carousel(
+                        data: snapshot.data, loading: !snapshot.hasData);
+                  })),
         ],
       ),
     );

@@ -6,7 +6,9 @@ final String apiKey = '10923b261ba94d897ac6b81148314a3f';
 final String apiUrl = "https://api.themoviedb.org/3/movie";
 
 Future<List<Movie>> getMovies() async {
-  final response = await http.get('$apiUrl/now_playing?api_key=$apiKey');
+  final String url = '$apiUrl/now_playing?api_key=$apiKey';
+  print(url);
+  final response = await http.get(url);
   if (response.statusCode == 200) {
     final data = json.decode(response.body);
     final results = data["results"];
@@ -34,6 +36,6 @@ class Movie {
         id: json["id"],
         title: json["title"],
         releaseDate: json["release_date"],
-        poster: json['poster_path']);
+        poster: 'https://image.tmdb.org/t/p/w500${json["poster_path"]}');
   }
 }
