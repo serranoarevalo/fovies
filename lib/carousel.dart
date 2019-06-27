@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fovies/data.dart';
+import 'dart:math';
 
 class Carousel extends StatefulWidget {
   Carousel({Key key, @required this.data, @required this.loading})
@@ -13,22 +14,21 @@ class Carousel extends StatefulWidget {
 
 class _CarouselState extends State<Carousel> {
   PageController controller =
-      PageController(initialPage: 0, viewportFraction: 0.8);
-  dynamic scrollValue = 0.0;
+      PageController(initialPage: 0, viewportFraction: 0.9);
+  dynamic page = 0.0;
 
   @override
   void initState() {
     super.initState();
     controller.addListener(() {
       setState(() {
-        scrollValue = controller.page;
+        page = controller.page;
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    print(scrollValue);
     return Container(
       height: MediaQuery.of(context).size.height / 1.7,
       child: !widget.loading
@@ -37,10 +37,15 @@ class _CarouselState extends State<Carousel> {
               itemCount: widget.data.length,
               controller: controller,
               itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(widget.data[index].poster))),
+                return Transform.scale(
+                  scale: max(0.9, 1.0 - (index - page).abs()),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                            image: NetworkImage(widget.data[index].poster))),
+                  ),
                 );
               },
             )
