@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fovies/data.dart';
 
 class Carousel extends StatefulWidget {
-  Carousel({Key key, @required this.children, @required this.currentSelected})
+  Carousel({Key key, @required this.futures, @required this.currentSelected})
       : super(key: key);
 
-  final List<Widget> children;
+  final List<Future<List<Movie>>> futures;
   final int currentSelected;
   _CarouselState createState() => _CarouselState();
 }
@@ -12,34 +13,23 @@ class Carousel extends StatefulWidget {
 class _CarouselState extends State<Carousel> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: AnimatedSwitcher(
-        switchInCurve: Curves.easeIn,
-        switchOutCurve: Curves.easeOut,
-        transitionBuilder: (Widget child, Animation<double> animation) {
-          final offsetAnimation = TweenSequence([
-            TweenSequenceItem(
-                tween: Tween<Offset>(
-                    begin: Offset(0.0, 1.0), end: Offset(0.0, 0.0)),
-                weight: 1),
-            TweenSequenceItem(
-                tween: ConstantTween(Offset(0.0, 0.0)), weight: 1),
-            TweenSequenceItem(
-                tween: Tween<Offset>(
-                    begin: Offset(0.0, 0.0), end: Offset(0.0, -1.0)),
-                weight: 1)
-          ]).animate(animation);
-          return SlideTransition(
-            position: offsetAnimation,
-            child: FadeTransition(
-              opacity: animation,
-              child: child,
-            ),
-          );
-        },
-        duration: Duration(milliseconds: 300),
-        child: widget.children[widget.currentSelected],
-      ),
+    return FutureBuilder(
+      key: UniqueKey(),
+      future: widget.futures[widget.currentSelected],
+      builder: (BuildContext context, AsyncSnapshot<List<Movie>> snapshot) {
+        if (snapshot.hasData) {
+          return Container(
+              decoration: BoxDecoration(color: Colors.red),
+              height: MediaQuery.of(context).size.height / 2,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Text(snapshot.data[index].title);
+                  }));
+        }
+        return CircularProgressIndicator();
+      },
     );
   }
 }

@@ -1,6 +1,6 @@
 # fovies
 
-Flutter Movie App using TheMovieDB and BLoC
+Flutter Movie App using TheMovieDB
 
 ## Goal
 

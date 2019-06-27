@@ -10,11 +10,11 @@ class Tabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 20),
+      margin: EdgeInsets.only(bottom: 50),
       child: Column(
         children: <Widget>[
           SizedBox(
-            height: 300,
+            height: 20,
             child: ListView(
               padding: EdgeInsets.only(left: 35),
               scrollDirection: Axis.horizontal,

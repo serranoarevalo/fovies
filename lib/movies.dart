@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fovies/carousel.dart';
+import 'package:fovies/data.dart';
 import 'package:fovies/tabs.dart';
 
 class Movies extends StatefulWidget {
-  Movies({Key key}) : super(key: key);
+  Movies({Key key, @required this.nowPlaying}) : super(key: key);
+
+  final Future<List<Movie>> nowPlaying;
 
   _MoviesState createState() => _MoviesState();
 }
@@ -33,24 +36,7 @@ class _MoviesState extends State<Movies> {
           Container(
             child: Carousel(
               currentSelected: selected,
-              children: [
-                Text(
-                  "Zero",
-                  key: UniqueKey(),
-                ),
-                Text(
-                  "One",
-                  key: UniqueKey(),
-                ),
-                Text(
-                  "Two",
-                  key: UniqueKey(),
-                ),
-                Text(
-                  "Three",
-                  key: UniqueKey(),
-                ),
-              ],
+              futures: [widget.nowPlaying],
             ),
           )
         ],

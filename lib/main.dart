@@ -7,7 +7,6 @@ void main() => runApp(Fovies());
 class Fovies extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    getMovies();
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.white,
@@ -26,7 +25,7 @@ class Fovies extends StatelessWidget {
                       fontSize: 32),
                 ),
               ),
-              Movies()
+              Movies(nowPlaying: getMovies())
             ],
           ),
         ),
