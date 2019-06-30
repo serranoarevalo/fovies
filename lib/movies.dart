@@ -32,6 +32,18 @@ class _MoviesState extends State<Movies> {
     });
   }
 
+  Future<List<Movie>> getFuture() {
+    if (selected == 0) {
+      return widget.nowPlaying;
+    } else if (selected == 1) {
+      return widget.upcoming;
+    } else if (selected == 2) {
+      return widget.popular;
+    } else if (selected == 3) {
+      return widget.topRated;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,7 +58,7 @@ class _MoviesState extends State<Movies> {
               height: MediaQuery.of(context).size.height / 1.7,
               child: FutureBuilder(
                   key: UniqueKey(),
-                  future: widget.nowPlaying,
+                  future: getFuture(),
                   builder: (BuildContext context,
                       AsyncSnapshot<List<Movie>> snapshot) {
                     return Carousel(
