@@ -25,7 +25,11 @@ class Fovies extends StatelessWidget {
                       fontSize: 32),
                 ),
               ),
-              Movies(nowPlaying: getMovies())
+              Movies(
+                  nowPlaying: getNowPlaying(),
+                  upcoming: getUpcoming(),
+                  popular: getPopular(),
+                  topRated: getTopRated())
             ],
           ),
         ),

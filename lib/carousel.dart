@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fovies/data.dart';
-import 'dart:math';
 
 class Carousel extends StatefulWidget {
   Carousel({Key key, @required this.data, @required this.loading})
@@ -12,11 +11,9 @@ class Carousel extends StatefulWidget {
   _CarouselState createState() => _CarouselState();
 }
 
-final double fraction = 0.85;
-
 class _CarouselState extends State<Carousel> {
   PageController controller =
-      PageController(initialPage: 0, viewportFraction: fraction);
+      PageController(initialPage: 0, viewportFraction: 0.85);
   dynamic page = 0.0;
 
   @override

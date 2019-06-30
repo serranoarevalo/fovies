@@ -5,10 +5,7 @@ import 'package:http/http.dart' as http;
 final String apiKey = '10923b261ba94d897ac6b81148314a3f';
 final String apiUrl = "https://api.themoviedb.org/3/movie";
 
-Future<List<Movie>> getMovies() async {
-  final String url = '$apiUrl/now_playing?api_key=$apiKey';
-  print(url);
-  final response = await http.get(url);
+List<Movie> handleBody(http.Response response) {
   if (response.statusCode == 200) {
     final data = json.decode(response.body);
     final results = data["results"];
@@ -21,6 +18,30 @@ Future<List<Movie>> getMovies() async {
   } else {
     throw Exception("Can't get movies");
   }
+}
+
+Future<List<Movie>> getNowPlaying() async {
+  final String url = '$apiUrl/now_playing?api_key=$apiKey';
+  final response = await http.get(url);
+  return handleBody(response);
+}
+
+Future<List<Movie>> getUpcoming() async {
+  final String url = '$apiUrl/upcoming?api_key=$apiKey';
+  final response = await http.get(url);
+  return handleBody(response);
+}
+
+Future<List<Movie>> getPopular() async {
+  final String url = '$apiUrl/popular?api_key=$apiKey';
+  final response = await http.get(url);
+  return handleBody(response);
+}
+
+Future<List<Movie>> getTopRated() async {
+  final String url = '$apiUrl/top_rated?api_key=$apiKey';
+  final response = await http.get(url);
+  return handleBody(response);
 }
 
 class Movie {

@@ -4,9 +4,18 @@ import 'package:fovies/data.dart';
 import 'package:fovies/tabs.dart';
 
 class Movies extends StatefulWidget {
-  Movies({Key key, @required this.nowPlaying}) : super(key: key);
+  Movies(
+      {Key key,
+      @required this.nowPlaying,
+      @required this.upcoming,
+      @required this.popular,
+      @required this.topRated})
+      : super(key: key);
 
   final Future<List<Movie>> nowPlaying;
+  final Future<List<Movie>> upcoming;
+  final Future<List<Movie>> popular;
+  final Future<List<Movie>> topRated;
 
   _MoviesState createState() => _MoviesState();
 }
