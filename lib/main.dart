@@ -11,7 +11,7 @@ class Fovies extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.white,
         body: Container(
-          padding: EdgeInsets.only(top: 125),
+          padding: EdgeInsets.only(top: 100),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

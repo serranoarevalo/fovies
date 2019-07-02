@@ -42,6 +42,7 @@ class _MoviesState extends State<Movies> {
     } else if (selected == 3) {
       return widget.topRated;
     }
+    return widget.nowPlaying;
   }
 
   @override
